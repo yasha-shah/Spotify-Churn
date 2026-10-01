@@ -1,0 +1,40 @@
+div[data-testid='stToolbar'] {
+    background-color:#151515;
+}
+
+div[data-testid='stMetric'] {
+    background-color: #1B1B1B;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 7px 0px rgba(0,0,0,0.65);
+    -webkit-box-shadow: 2px 2px 7px 0px rgba(0,0,0,0.65);
+    -moz-box-shadow: 2px 2px 7px 0px rgba(0,0,0,0.65);
+}
+
+div[data-testid='stMetric'] label {
+    color: #CBD5E1;
+}
+
+div[data-testid='stElementContainer']:has(div.stPlotlyChart) {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 2px 2px 7px 0px rgba(0,0,0,0.65);
+    -webkit-box-shadow: 2px 2px 7px 0px rgba(0,0,0,0.65);
+    -moz-box-shadow: 2px 2px 7px 0px rgba(0,0,0,0.65);
+}
+
+div.block-container {
+    padding-top: 2rem;
+}
+
+span[data-baseweb="tag"] span {
+    color: #1B1B1B;
+}
+
+span[data-baseweb="tag"] {
+    background-color: #83c9ff;
+}
+
+span[data-baseweb="tag"] svg {
+    fill: #1B1B1B;
+}
