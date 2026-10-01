@@ -1,51 +1,35 @@
-# Spotify Churn Analysis Dashboard
-## Project Overview
-This project is a data analysis of a simulated Spotify user dataset to analyse customer churn. It provides an interactive dashboard to understand various factors affecting user retention for the platform and will help in data-driven decision making.  
+# Spotify Churn Analysis
 
-## Dataset
-The [data](https://www.kaggle.com/datasets/nabihazahid/spotify-dataset-for-churn-analysis/data) is from a synthetically generated dataset sourced from Kaggle.  
+Analysis of churn across 8,000 Spotify users by subscription plan, device, country, age, and listening behaviour. The original analysis was built in Excel (pivot tables, slicers, and charts). This repo recreates that one-page Excel dashboard in Streamlit.
 
-### Key Columns:
-|Column Name|Description|
-|-----------|-----------|
-|user_id|Unique identifier for each user|
-|gender|User gender (Male/Female/Other)|
-|age|User age|
-|country|User country|
-|subscription_type|Type of Spotify subscription (Free, Premium, Family, Student)|
-|listening_time|Minutes spent listening per day|
-|songs_played_per_day|Number of songs played daily|
-|device_type|Device used (Mobile, Desktop, Web)|
-|ads_listened_per_week|Number of ads heard per week|
-|is_churned|If the user still uses the platform (0 = Active, 1 = Churned)|  
+## What this answers
 
-## Dashboard Overview
-The dashboard shows a dynamic analysis of the data using various KPIs and visualizations, which can be further filtered using slicers.  
+- What share of users stopped using Spotify, by subscription plan
+- Which platform, country, and age range have the most churned users
+- How listening time and songs played compare between churned and retained users
 
+## Dashboard
 
-<img width="1579" height="808" alt="dashboard_screenshot" src="https://github.com/user-attachments/assets/4d935f5e-0474-4a0b-b87e-787ed9ee1e0f" />
+A single page (`app.py`) with the same layout as the Excel `Dashboard` sheet:
 
+| Area | Contents |
+| --- | --- |
+| Sidebar filters | Multi-select dropdowns for Gender, Country, Subscription type, Device type, Churn status (empty = all, like a cleared Excel slicer) |
+| KPI cards | Total Users, Churn Rate, Average Listening Time, Average Songs Played Daily |
+| Charts | - What are the listening habits of users?<br>- What platform has the most churned users?<br>- What % of users stopped using Spotify?<br>- What country has the highest churn?<br>- What age range has the highest churn? |
 
-### KPIs: 
-Key Performance Indicators show **Total Users**, **Churn Rate**, **Average Listening Time**, and **Average Songs Played Daily** for a quick overview of the data.
+## Data
 
-### Slicers: 
-Slicers can be used to further filter down the KPIs and visualizations to get a more in-depth analysis.  
-Data can be filtered on the basis of:  
-- **Gender**
-- **Country**
-- **Subscription Type**
-- **Device Type**
-- **Churn Status**
+| Path | Role |
+| --- | --- |
+| `data/raw/spotify_churn_dashboard.xlsx` | Excel dashboard; the app reads the hidden `spotify_dataset` sheet |
 
-### Visualizations: 
-1. Clustered Column Chart: A comparison of listening habits (Daily listening time and songs played daily) for users who churned versus those who stayed.
-2. Pie Chart: A distribution of churned users for different device types.
-3. Clustered Bar Chart: A breakdown of churn rate by subscription type.
-4. Clustered Bar Chart: A breakdown of churn rate by country.
-5. Clustered Column Chart: A distribution of churned users across different age groups.
+Columns: `user_id`, `gender`, `age`, `country_short`, `country`, `subscription_type`, `listening_time`, `songs_played_per_day`, `skip_rate`, `device_type`, `ads_listened_per_week`, `offline_listening`, `is_churned`.
 
-![dashboard_gif](https://github.com/user-attachments/assets/2803029b-dffa-4c78-b33a-fd19e45aace0)
+Derived fields created in `utils.py`:
+
+- `status` (Churned / Not churned)
+- `age_group` (5-year bands, 16-20 to 56-60, matching the Excel pivot grouping)
 
 ## Key Insights
 1. On average, churned users have a comparatively lower daily listening time than that of the active users.
@@ -53,9 +37,40 @@ Data can be filtered on the basis of:
 3. Out of all the countries, Germany has the most churned users.
 4. Desktop users are more prone to churn, which could be because of poor user experience, or lack of some features which are available on other device types.
 
-### Tools Used:  
-Microsoft Excel: For data manipulation, pivot tables, and making the final dashboard.  
+## Stack
 
----
-### Project Link:  
-[Spotify-Churn-Analysis-Dashboard](https://github.com/yasha-shah/Spotify-Churn-Dashboard/blob/main/spotify_churn_dashboard.xlsx)
+- Python, pandas, openpyxl
+- Streamlit and Plotly for the dashboard
+- Excel for the original pivot-table dashboard
+
+## Run locally
+
+For Windows:
+
+```
+uv venv dataenv
+uv pip install --python dataenv -r requirements.txt
+dataenv\Scripts\python.exe -m streamlit run app.py
+```
+
+On macOS / Linux:
+```
+uv venv dataenv
+uv pip install --python dataenv -r requirements.txt
+dataenv/bin/python -m streamlit run app.py
+```
+
+Requirements: `streamlit`, `pandas`, `plotly`, `openpyxl`.
+
+## Project layout
+
+```
+app.py                  # Streamlit dashboard (single page)
+utils.py                # Cached loader, CSS inject
+style.css               # Metric, and chart styling
+data/raw/               # Source Excel workbook
+```
+
+## Author
+
+[Yasha Shah](https://github.com/yasha-shah/) · [LinkedIn](https://linkedin.com/in/shah-yasha)
