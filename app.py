@@ -124,7 +124,7 @@ plan_chart.update_xaxes(title='', range=[0, 100], ticksuffix='%')
 plan_chart.update_yaxes(title='')
 plan_chart.update_layout(
     title={
-        'text': 'What % of users stopped<br>using Spotify?',
+        'text': 'What subscription has the highest churn %?',
         'y':0.92,
         'x':0.5,
         'xanchor': 'center',
